@@ -66,7 +66,9 @@ jobs:
       - name: Deploy to CCI
         uses: huaweicloud/deploy-cci-action@v1.2.0
         id: deploy-to-cci
+        env:
+          IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}  
         with:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
-          image: ${{ needs.build.outputs.image  }}
+          image: ${{ env.IMAGE_BUILD_NAME  }}
