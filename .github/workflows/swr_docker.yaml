@@ -38,9 +38,7 @@ jobs:
         id: build-image
         env:
           IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
-        run: |
-          docker build -t ${{env.IMAGE_BUILD_NAME}} .
-          echo "::set-output name=image::${{env.IMAGE_BUILD_NAME}}"
+        run: docker build -t ${{env.IMAGE_BUILD_NAME}} .
 
       - name: Push Docker Image
         env:
