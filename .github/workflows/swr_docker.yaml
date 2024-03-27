@@ -71,4 +71,4 @@ jobs:
         with:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
-          image: ${{ env.IMAGE_BUILD_NAME  }}
+          image: ${{ env.IMAGE_BUILD_NAME }}
