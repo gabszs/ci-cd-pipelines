@@ -13,7 +13,7 @@ jobs:
         uses: huaweicloud/swr-login@v2.1.0
         with:
           access-key-id: ${{ secrets.ACCESS_KEY }}
-          accesss-key-secret: ${{ secrets.SECRET_ACCESS_KEY }}
+          access-key-secret: ${{ secrets.SECRET_ACCESS_KEY }}
           region: ${{ vars.CLOUD_REGION }}
 
       - name: Build Docker Image
