@@ -1,5 +1,5 @@
 name: Develop-Pipeline
-on: [push, merge]
+on: [push, pull_request]
 
 jobs:
   build:
