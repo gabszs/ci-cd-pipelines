@@ -69,5 +69,5 @@ jobs:
         with:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
-          image: ${{ env.IMAGE_BUILD_NAME }}
-          region: ${{ env.CLOUD_REGION }}
+          image: swr.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello_world:latest
+          region: sa-brazil-1
