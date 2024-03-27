@@ -17,7 +17,7 @@ jobs:
           region: ${{ vars.CLOUD_REGION }}
 
       - name: Build Docker Image
-        run: docker build -t swr-api.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello-world:latest .
+        run: docker build -t swr.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello-world:latest .
 
       - name: Push Docker Image
-        run: docker push swr-api.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello-world:latest
+        run: docker push swr.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello-world:latest
