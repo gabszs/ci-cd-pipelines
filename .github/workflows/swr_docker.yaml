@@ -1,0 +1,23 @@
+name: Develop-Pipeline
+on: [push, merge]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Huawei Cloud Software Repository for Container (SWR) Login
+      uses: huaweicloud/swr-login@v2.1.0
+      with:
+        access-key-id: ${{ secrets.ACCESS_KEY }}
+        acesss-key-secret: ${{ secrets.SECRET_ACCESS_KEY }}
+        region: ${{ vars.CLOUD_REGION }}
+
+    - name: Build Docker Image
+      run: docker build -t swr-api.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello-world:latest .
+
+    - name: Push Docker Image
+      run: docker push swr-api.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello-world:latest
