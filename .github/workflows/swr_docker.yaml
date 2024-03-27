@@ -11,14 +11,13 @@ on:
       - main
 
 env:
-  PROJECT_REGION: sa-brazil-1
+  CLOUD_REGION: sa-brazil-1
   SWR_ORGANIZATION: devopsbrdev
   IMAGE_NAME: hello_world
   IMAGE_TAG: latest
   NAMESPACE: cci-workspace-resume-infra
   DEPLOYMENT: hello-world-deployment
   PROJECT_ID: 4e3eb0b6e82f41a1bc07bf0127edbf77
-  CLOUD_REGION: "LA-Sao Paulo1"
 
 jobs:
   build:
@@ -33,17 +32,17 @@ jobs:
         with:
           access-key-id: ${{ secrets.ACCESS_KEY }}
           access-key-secret: ${{ secrets.SECRET_ACCESS_KEY }}
-          region: ${{ env.PROJECT_REGION }}
+          region: ${{ env.CLOUD_REGION }}
 
       - name: Build Docker Image
         id: build-image
         env:
-          IMAGE_BUILD_NAME: swr.${{env.PROJECT_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
+          IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
         run: docker build -t ${{env.IMAGE_BUILD_NAME}} .
 
       - name: Push Docker Image
         env:
-          IMAGE_BUILD_NAME: swr.${{env.PROJECT_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}  
+          IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}  
         run: docker push ${{ env.IMAGE_BUILD_NAME }}
 
   deploy:
@@ -71,3 +70,4 @@ jobs:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
           image: ${{ env.IMAGE_BUILD_NAME }}
+          region: ${{ env.CLOUD_REGION }}
