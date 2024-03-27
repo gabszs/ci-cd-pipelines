@@ -57,6 +57,7 @@ jobs:
             region: ${{ env.CLOUD_REGION }}
             project_id: ${{ env.PROJECT_ID }}
 
+            
       - name: Kubectl Tool Installer 
         id: install-kubectl
         uses: Azure/setup-kubectl@v2.1
