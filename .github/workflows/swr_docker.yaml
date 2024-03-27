@@ -57,7 +57,7 @@ jobs:
             region: ${{ env.CLOUD_REGION }}
             project_id: ${{ env.PROJECT_ID }}
 
-            
+
       - name: Kubectl Tool Installer 
         id: install-kubectl
         uses: Azure/setup-kubectl@v2.1
@@ -70,5 +70,4 @@ jobs:
         with:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
-          image: swr.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello_world:latest
-          region: sa-brazil-1
+          image: ${{ env.NAMESPACE }}
