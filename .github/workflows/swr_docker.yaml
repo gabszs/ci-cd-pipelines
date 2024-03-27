@@ -15,7 +15,6 @@ env:
   SWR_ORGANIZATION: devopsbrdev
   IMAGE_NAME: hello_world
   IMAGE_TAG: latest
-  IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
   NAMESPACE: cci-workspace-resume-infra
   DEPLOYMENT: hello-world-deployment
   PROJECT_ID: 4e3eb0b6e82f41a1bc07bf0127edbf77
@@ -36,12 +35,15 @@ jobs:
           region: ${{ env.CLOUD_REGION }}
 
       - name: Build Docker Image
+        id: build-image
+        env:
+          IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
         run: |
           docker build -t ${{env.IMAGE_BUILD_NAME}} .
           echo "::set-output name=image::${{env.IMAGE_BUILD_NAME}}"
 
       - name: Push Docker Image
-        run: docker push ${{env.IMAGE_BUILD_NAME}}
+        run: docker push ${{ steps.build-image.outputs.image }}
 
   deploy:
     needs: build
