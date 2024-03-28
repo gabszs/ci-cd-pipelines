@@ -67,7 +67,9 @@ jobs:
         # uses: huaweicloud/deploy-cci-action@v1.2.0 (Main repository)
         uses: gabszs/deploy-cci-action@v1.2.1 # since the main action does not support latam reagions, use this version with latam regions included
         id: deploy-to-cci
+        env:
+          IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
         with:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
-          image: ${{ needs.build.outputs.image }}
+          image: ${{ env.IMAGE_BUILD_NAME }}
