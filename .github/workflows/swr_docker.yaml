@@ -70,3 +70,4 @@ jobs:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
           image: swr.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello_world:latest
+          region: sa-brazil-1
