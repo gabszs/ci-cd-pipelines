@@ -42,7 +42,7 @@ jobs:
 
       - name: Push Docker Image
         env:
-          IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}  
+          IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
         run: docker push ${{ env.IMAGE_BUILD_NAME }}
 
   deploy:
@@ -52,13 +52,12 @@ jobs:
       - name: Authenticate to Huawei Cloud
         uses: huaweicloud/auth-action@v1.1.0
         with:
-            access_key_id: ${{ secrets.ACCESS_KEY }}
-            secret_access_key: ${{ secrets.SECRET_ACCESS_KEY }}
-            region: ${{ env.CLOUD_REGION }}
-            project_id: ${{ env.PROJECT_ID }}
+          access_key_id: ${{ secrets.ACCESS_KEY }}
+          secret_access_key: ${{ secrets.SECRET_ACCESS_KEY }}
+          region: ${{ env.CLOUD_REGION }}
+          project_id: ${{ env.PROJECT_ID }}
 
-
-      - name: Kubectl Tool Installer 
+      - name: Kubectl Tool Installer
         id: install-kubectl
         uses: Azure/setup-kubectl@v2.1
 
@@ -66,8 +65,8 @@ jobs:
         uses: huaweicloud/deploy-cci-action@v1.2.0
         id: deploy-to-cci
         env:
-          IMAGE_BUILD_NAME: swr.sa-brazil-1.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}  
+          IMAGE_BUILD_NAME: swr.sa-brazil-1.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
         with:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
-          image: ${{ env.NAMESPACE }}
+          image: swr.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello_world:latest
