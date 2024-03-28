@@ -1,4 +1,4 @@
-name: Develop-Pipeline
+name: Production-Pipeline-SWR-CCI
 
 on:
   push:
@@ -43,12 +43,14 @@ jobs:
       - name: Push Docker Image
         env:
           IMAGE_BUILD_NAME: swr.${{env.CLOUD_REGION}}.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
-        run: docker push ${{ env.IMAGE_BUILD_NAME }}
-
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
+        run: | 
+          docker push ${{ env.IMAGE_BUILD_NAME }}
+          echo "::set-output name=image::${{env.IMAGE_BUILD_NAME}}"
+          
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Authenticate to Huawei Cloud
         uses: huaweicloud/auth-action@v1.1.0
         with:
@@ -62,12 +64,10 @@ jobs:
         uses: Azure/setup-kubectl@v2.1
 
       - name: Deploy to CCI
-        # uses: huaweicloud/deploy-cci-action@v1.2.0
-        uses: gabszs/deploy-cci-action@v1.2.1
+        # uses: huaweicloud/deploy-cci-action@v1.2.0 (Main repository)
+        uses: gabszs/deploy-cci-action@v1.2.1 # since the main action does not support latam reagions, use this version with latam regions included
         id: deploy-to-cci
-        env:
-          IMAGE_BUILD_NAME: swr.sa-brazil-1.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
         with:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
-          image: swr.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello_world:latest
+          image: ${{ needs.build.outputs.image }}
