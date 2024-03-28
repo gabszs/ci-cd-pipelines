@@ -7,7 +7,7 @@ app = FastAPI()
 
 @app.get("/")
 async def hello_world():
-    return {"Message": "Hello World!!"}
+    return {"Message": "Hello World V2!!"}
 
 
 @app.get("/ping")
