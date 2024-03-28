@@ -62,7 +62,8 @@ jobs:
         uses: Azure/setup-kubectl@v2.1
 
       - name: Deploy to CCI
-        uses: huaweicloud/deploy-cci-action@v1.2.0
+        # uses: huaweicloud/deploy-cci-action@v1.2.0
+        uses: gabszs/deploy-cci-action@v1.2.1
         id: deploy-to-cci
         env:
           IMAGE_BUILD_NAME: swr.sa-brazil-1.myhuaweicloud.com/${{env.SWR_ORGANIZATION}}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
@@ -70,4 +71,3 @@ jobs:
           namespace: ${{ env.NAMESPACE }}
           deployment: ${{ env.DEPLOYMENT }}
           image: swr.sa-brazil-1.myhuaweicloud.com/devopsbrdev/hello_world:latest
-          region: sa-brazil-1
